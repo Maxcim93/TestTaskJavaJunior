@@ -6,7 +6,7 @@ import java.util.concurrent.BlockingQueue;
 /**
  * Created by Максим on 30.08.2016.
  */
-public class GeneratorElement implements Runnable{
+public class GeneratorElement extends Thread implements Runnable{
     public static class Generator{
         private int countGroup;
         private int countEl;
@@ -51,24 +51,24 @@ public class GeneratorElement implements Runnable{
         public int curCountGroup(){return countGroup;}
     }
 
-    private BlockingQueue<Element> queue;
-    private int countGroup;
-    private int countEl;
+    //private BlockingQueue<Element> queue;
+    ElementBlockingQueue elements;
     private static Random RND=new Random();
     private Generator generator;
 
-    public GeneratorElement(BlockingQueue<Element> queue,int countGroup, int countEl){
-        this.queue=queue;
-        this.countGroup=countGroup;
-        this.countEl=countEl;
+    public GeneratorElement(ElementBlockingQueue elements,int countGroup, int countEl){
+        this.elements=elements;
         this.generator=new Generator(countGroup,countEl);
+
+        //старт
+        this.start();
     }
 
     public void run(){
         try{
             while(!Thread.currentThread().isInterrupted()){
                 while(generator.countGroup>0)
-                    queue.put(generator.generateElement());
+                    elements.put(generator.generateElement());
             }
         }catch(InterruptedException e){
             System.out.println("Generator is stopped");
