@@ -17,10 +17,13 @@ public class App
         System.out.println( "Hello World!" );
 
         ManagerProcessingElement managerProcessingElement=
-                new ManagerProcessingElement(1000, 1000);
+                new ManagerProcessingElement(5);
         ElementBlockingQueue queue=null;
-        GeneratorElement generator = new GeneratorElement(managerProcessingElement.getQueue(),1000,1000);
-
+        GeneratorElement generator = new GeneratorElement(managerProcessingElement.getQueue(),100,100);
+        /*ElementBlockingQueue queue=null;
+        GeneratorElement generator = new GeneratorElement(queue=new ElementBlockingQueue(5),1000,1000);
+        for(;;)
+            System.out.println(queue.take());*/
        // TimeUnit.SECONDS.sleep(5);
     }
 }

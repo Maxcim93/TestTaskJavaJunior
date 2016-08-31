@@ -19,17 +19,17 @@ public class GeneratorElement extends Thread implements Runnable{
 
             //заполнение групп индентификаторами элементов в случайном порядке
             shuffleIdGroup = new HashMap<Integer, Queue<Integer>>();
-            for (int i = 0; i < countGroup; i++) {
-                Integer[] id = new Integer[countEl];
-                for (int j = 0; j < countEl; j++)
-                    id[j] = j;
+            Integer[] id = new Integer[this.countEl];
+            for (int j = 0; j < this.countEl; j++)
+                id[j] = j;
+            for (int i = 0; i < this.countGroup; i++) {
                 List<Integer> shuffleId = new LinkedList<Integer>(Arrays.asList(id));
                 Collections.shuffle(shuffleId,RND);
                 shuffleIdGroup.put(i, (Queue<Integer>) shuffleId);
             }
             //заполнение массива иентификаторами групп
-            Integer[] gId = new Integer[countGroup];
-            for (int i = 0; i < countGroup; i++) {
+            Integer[] gId = new Integer[this.countGroup];
+            for (int i = 0; i < this.countGroup; i++) {
                 gId[i] = i;
             }
             groupId=new ArrayList<Integer>(Arrays.asList(gId));
@@ -52,11 +52,11 @@ public class GeneratorElement extends Thread implements Runnable{
     }
 
     //private BlockingQueue<Element> queue;
-    ElementBlockingQueue elements;
+    BlockingQueue<Element> elements;
     private static Random RND=new Random();
     private Generator generator;
 
-    public GeneratorElement(ElementBlockingQueue elements,int countGroup, int countEl){
+    public GeneratorElement(BlockingQueue<Element> elements,int countGroup, int countEl){
         this.elements=elements;
         this.generator=new Generator(countGroup,countEl);
 
@@ -69,6 +69,7 @@ public class GeneratorElement extends Thread implements Runnable{
             while(!Thread.currentThread().isInterrupted()){
                 while(generator.countGroup>0)
                     elements.put(generator.generateElement());
+                Thread.currentThread().interrupt();
             }
         }catch(InterruptedException e){
             System.out.println("Generator is stopped");
