@@ -1,5 +1,7 @@
 package com.maxim.testjunior.queueprocessing;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -9,6 +11,8 @@ import java.util.Queue;
 public class Group {
     private int expectedId=0;
     private int idGroup;
+    private Queue<Element> elements=
+            new PriorityQueue<Element>();
 
     public Group(int idGroup){
         this.idGroup=idGroup;
@@ -16,25 +20,22 @@ public class Group {
 
     public int getId(){return idGroup;}
 
-    private Queue<Element> elements=
-            new PriorityQueue<Element>();
-
-    public void insert(Element e){
+    public synchronized void insert(Element e){
         elements.offer(e);
     }
 
-    public Element getElement(){
-        expectedId++;
-        return elements.poll();
-    }
-
-    public boolean containExpectedElement(){
-        boolean result;
-        if(elements.peek()!=null && elements.peek().idEl==expectedId)
-            result=true;
-        else
-            result=false;
-
-        return result;
+    public synchronized List<Element> getElements(){
+        List<Element> outElements=new LinkedList<Element>();
+        int countAddedEl=0;
+        while(countAddedEl<10) {
+            if (elements.peek() != null && elements.peek().idEl == expectedId) {
+                outElements.add(elements.poll());
+                expectedId++;
+                countAddedEl++;
+            } else {
+                break;
+            }
+        }
+        return outElements;
     }
 }

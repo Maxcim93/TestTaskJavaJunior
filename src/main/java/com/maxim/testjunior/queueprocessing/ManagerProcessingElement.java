@@ -1,45 +1,50 @@
 package com.maxim.testjunior.queueprocessing;
 
-import java.util.Arrays;
-import java.util.concurrent.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.BlockingQueue;
+
+
 
 /**
  * Created by Максим on 30.08.2016.
  */
-public class ManagerProcessingElement extends Thread implements Runnable {
-    BlockingQueue<Element> elements;
-    ScheduledExecutorService executor;
+public class ManagerProcessingElement {
+    private BlockingQueue<Element> sourceElements;
+    private ElementGroupStorage storageElements;
+    private ExecutorService executor;
     private int countThread;
 
-    public ManagerProcessingElement(int countThread){
-        this.elements=new ElementBlockingQueue(7);
+    private ElementsStorageBuilder builderStorage;
+    private List<ProcessorElements> processors;
+
+    public ManagerProcessingElement(BlockingQueue<Element> sourceElements,int countThread){
+        this.sourceElements=sourceElements;
+        this.storageElements=new ElementGroupStorage();
+
         this.countThread=countThread;
-        this.executor= Executors.newScheduledThreadPool(5);
-        //this.executor= Executors;
-        //старт
-        this.start();
+        this.executor= Executors.newFixedThreadPool(countThread);
+
+        //старт обработки
+        startProcessing();
     }
 
-    public BlockingQueue<Element> getQueue(){return elements;}
+    private void startProcessing(){
+        //создание и запуск выполнения сервиса формирующего хранилище элементов по группам
+        builderStorage=new ElementsStorageBuilder(sourceElements,storageElements);
+        //создание обработчиков элементов
+        processors=new ArrayList<ProcessorElements>();
+        for(int i=0;i<countThread-1;i++)
+            processors.add(new ProcessorElements(storageElements,i));
+        //запуск обарботчиков элементов
+        for(ProcessorElements processor:processors)
+            processor.run();
+    }
 
-    public void run(){
-        try{
-           /* for(int i=0;i<countThread;i++)
-                new ProcessorElement(elements);*/
-
-            while(!Thread.currentThread().isInterrupted()){
-                final Element element=elements.take();
-
-                executor.schedule(new Runnable(){
-                                    public void run(){
-                                        System.out.println(element);
-                                    }
-                                }, 10L, TimeUnit.MILLISECONDS);
-                //TimeUnit.MILLISECONDS.sleep(0);
-            }
-        }catch(InterruptedException e){
-            executor.shutdown();
-            System.out.println("Generator is stopped");
-        }
+    public void stopProcessingElements(){
+        executor.shutdownNow();
+        System.out.println("Manager is stopped");
     }
 }

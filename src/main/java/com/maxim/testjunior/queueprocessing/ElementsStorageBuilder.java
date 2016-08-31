@@ -5,11 +5,11 @@ import java.util.concurrent.BlockingQueue;
 /**
  * Created by Максим on 31.08.2016.
  */
-public class ElementStorageBuilder extends Thread {
+public class ElementsStorageBuilder extends Thread {
     private BlockingQueue<Element> source;
     private ElementGroupStorage storage;
 
-    public ElementStorageBuilder(BlockingQueue<Element> source,ElementGroupStorage storage){
+    public ElementsStorageBuilder(BlockingQueue<Element> source, ElementGroupStorage storage){
         this.source=source;
         this.storage=storage;
         start();
@@ -21,7 +21,7 @@ public class ElementStorageBuilder extends Thread {
                 storage.insertElement(source.take());
             }
         }catch(InterruptedException e){
-            System.out.println("Generator is stopped");
+            System.out.println("Storage elements is stopped");
         }
     }
 }

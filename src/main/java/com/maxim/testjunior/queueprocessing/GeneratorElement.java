@@ -2,6 +2,7 @@ package com.maxim.testjunior.queueprocessing;
 
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Максим on 30.08.2016.
@@ -70,6 +71,7 @@ public class GeneratorElement extends Thread implements Runnable{
                 while(generator.countGroup>0)
                     elements.put(generator.generateElement());
                 Thread.currentThread().interrupt();
+                TimeUnit.MICROSECONDS.sleep(100);
             }
         }catch(InterruptedException e){
             System.out.println("Generator is stopped");

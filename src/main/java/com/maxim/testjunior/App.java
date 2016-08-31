@@ -16,16 +16,8 @@ public class App
     {
         System.out.println( "Hello World!" );
         BlockingQueue<Element> source=new LinkedBlockingQueue<Element>();
-        GeneratorElement generator = new GeneratorElement(source,100,100);
-        ElementGroupStorage storage=new ElementGroupStorage();
-        ElementStorageBuilder builderStorage=new ElementStorageBuilder(source,storage);
-        ProcessorElement processorElement1=new ProcessorElement(storage);
-        ProcessorElement processorElement2=new ProcessorElement(storage);
-        ProcessorElement processorElement3=new ProcessorElement(storage);
-        /*ElementBlockingQueue queue=null;
-        GeneratorElement generator = new GeneratorElement(queue=new ElementBlockingQueue(5),1000,1000);
-        for(;;)
-            System.out.println(queue.take());*/
-       // TimeUnit.SECONDS.sleep(5);
+        GeneratorElement generator = new GeneratorElement(source,1000,1000);
+        ManagerProcessingElement managerProcessing=new ManagerProcessingElement(source,6);
+        managerProcessing.stopProcessingElements();
     }
 }
