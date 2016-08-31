@@ -8,6 +8,14 @@ import java.util.Queue;
  */
 public class Group {
     private int expectedId=0;
+    private int idGroup;
+
+    public Group(int idGroup){
+        this.idGroup=idGroup;
+    }
+
+    public int getId(){return idGroup;}
+
     private Queue<Element> elements=
             new PriorityQueue<Element>();
 

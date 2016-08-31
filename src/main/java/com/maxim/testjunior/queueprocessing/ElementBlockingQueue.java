@@ -39,7 +39,7 @@ public class ElementBlockingQueue extends AbstractQueue<Element> implements Bloc
         if(elements.keySet().contains(e.idGroup)) {
             elements.get(e.idGroup).insert(e);
         } else{
-            elements.put(e.idGroup,new Group());
+            //elements.put(e.idGroup,new Group());
             elements.get(e.idGroup).insert(e);
         }
         notifyAll();
