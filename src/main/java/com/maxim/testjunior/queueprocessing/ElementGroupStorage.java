@@ -1,7 +1,9 @@
 package com.maxim.testjunior.queueprocessing;
 
+import com.maxim.testjunior.elements.Element;
+import com.maxim.testjunior.elements.Group;
+
 import java.util.*;
-import java.util.concurrent.Semaphore;
 
 /**
  * Created by Максим on 31.08.2016.
@@ -11,12 +13,17 @@ public class ElementGroupStorage {
     private LinkedList<Group> freeGroups = new LinkedList<Group>();
     private LinkedList<Group> checkoutGroups=new LinkedList<Group>();
     private int countFreeGroup=0;
+    private int sizeOutputElements;
+
+    public ElementGroupStorage(int sizeOutputElements){
+        this.sizeOutputElements=sizeOutputElements;
+    }
 
     public synchronized void insertElement(Element e){
         if(groups.keySet().contains(e.idGroup)) {
             groups.get(e.idGroup).insert(e);
         } else{
-            Group newGroup=new Group(e.idGroup);
+            Group newGroup=new Group(e.idGroup,sizeOutputElements);
             groups.put(newGroup.getId(),newGroup);
             freeGroups.add(newGroup);
             countFreeGroup++;

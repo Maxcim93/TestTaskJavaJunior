@@ -1,5 +1,7 @@
 package com.maxim.testjunior.queueprocessing;
 
+import com.maxim.testjunior.elements.Element;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -17,12 +19,9 @@ public class ManagerProcessingElement {
     private ExecutorService executor;
     private int countThread;
 
-    private ElementsStorageBuilder builderStorage;
-    private List<ProcessorElements> processors;
-
-    public ManagerProcessingElement(BlockingQueue<Element> sourceElements,int countThread){
+    public ManagerProcessingElement(BlockingQueue<Element> sourceElements,int countThread, int sizeOutputElements){
         this.sourceElements=sourceElements;
-        this.storageElements=new ElementGroupStorage();
+        this.storageElements=new ElementGroupStorage(sizeOutputElements);
 
         this.countThread=countThread;
         this.executor= Executors.newFixedThreadPool(countThread);
@@ -33,14 +32,10 @@ public class ManagerProcessingElement {
 
     private void startProcessing(){
         //создание и запуск выполнения сервиса формирующего хранилище элементов по группам
-        builderStorage=new ElementsStorageBuilder(sourceElements,storageElements);
-        //создание обработчиков элементов
-        processors=new ArrayList<ProcessorElements>();
+        executor.execute(new ElementsStorageBuilder(sourceElements,storageElements));
+        //создание и запуск обработчиков элементов
         for(int i=0;i<countThread-1;i++)
-            processors.add(new ProcessorElements(storageElements,i));
-        //запуск обарботчиков элементов
-        for(ProcessorElements processor:processors)
-            processor.run();
+            executor.execute(new ProcessorElements(storageElements,i));
     }
 
     public void stopProcessingElements(){
