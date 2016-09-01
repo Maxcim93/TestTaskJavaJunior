@@ -48,6 +48,11 @@ public class Element implements Comparable<Element>{
         return "Group: "+idGroup+" Id: "+idEl;
     }
 
+    /**
+     * Элементы эквиваленты при наличии идентичных ITEM_ID и GROUP_ID.
+     * @param e - объект для проверки идентичности.
+     * @return True - объекты идентичны, false - нет.
+     */
     @Override
     public boolean equals(Object e){
         Element el=(Element)e;
