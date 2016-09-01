@@ -3,24 +3,42 @@ package com.maxim.testjunior.queueprocessing;
 import com.maxim.testjunior.elements.Element;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Максим on 31.08.2016.
+ * Класс реализуют задачу для выполнения в отдельном потоке по беспрерывному
+ * добавлению элементов из исходной очереди в хранилище групп элементов {@link ElementGroupsStorage}, из которого
+ * в дальнейшем элементы получают потоки-обработчики {@link ProcessorElements}.
+ * @see ElementGroupsStorage
  */
 public class ElementsStorageBuilder implements Runnable {
-    private BlockingQueue<Element> source;
-    private ElementGroupStorage storage;
+    private BlockingQueue<Element> sourceQueue; //исходная очередь поступающих на обработку элементов
+    private ElementGroupsStorage storage;       // хранилище групп элементов
 
-    public ElementsStorageBuilder(BlockingQueue<Element> source, ElementGroupStorage storage){
-        this.source=source;
+    /**
+     * Конструктор инциализирует входную очередь и хранилище групп элементов.
+     * @param sourceQueue исходная очередь,
+     * @param storage хранилище групп элементов.
+     */
+    public ElementsStorageBuilder(BlockingQueue<Element> sourceQueue, ElementGroupsStorage storage){
+        this.sourceQueue=sourceQueue;
         this.storage=storage;
     }
 
+
+    /**
+     * Метод представляет реализацию задачи по бесперывному добавлению элементов
+     * из входной очереди в хранилище элементов путем вызова из
+     * объекта хранилища метода {@link ElementGroupsStorage#insertElement(Element)}.
+     */
     public void run(){
         try{
             while(!Thread.currentThread().isInterrupted()){
-                storage.insertElement(source.take());
+                //получение элемента из очереди и добавление в хранилище
+                storage.insertElement(sourceQueue.take());
             }
+            //ожидание получения исключения
+            TimeUnit.MICROSECONDS.sleep(100);
         }catch(InterruptedException e){
             System.out.println("Storage elements is stopped");
         }
