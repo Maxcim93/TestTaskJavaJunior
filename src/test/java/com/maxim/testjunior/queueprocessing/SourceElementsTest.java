@@ -5,6 +5,10 @@ import com.maxim.testjunior.generator.GeneratorElements;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * @author Maksim Mekh
+ * @version 1.0
+ */
 public class SourceElementsTest {
     /**
      * Осущестялется тестирование корректности функционирования генератора элементов

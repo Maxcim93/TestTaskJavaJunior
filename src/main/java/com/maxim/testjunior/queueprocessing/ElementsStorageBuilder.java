@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
  * добавлению элементов из исходной очереди в хранилище групп элементов {@link ElementGroupsStorage}, из которого
  * в дальнейшем элементы получают потоки-обработчики {@link ProcessorElements}.
  * @see ElementGroupsStorage
+ * @author Maksim Mekh
+ * @version 1.0
  */
 public class ElementsStorageBuilder implements Runnable {
     private BlockingQueue<Element> sourceQueue; //исходная очередь поступающих на обработку элементов

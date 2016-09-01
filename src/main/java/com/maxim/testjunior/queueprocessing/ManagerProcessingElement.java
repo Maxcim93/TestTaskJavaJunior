@@ -12,6 +12,8 @@ import java.util.concurrent.BlockingQueue;
  * В зависиомсти от заданного количества потоков вызвает на выполнение
  * поток, формирующий хранилище элементов {@link ElementsStorageBuilder}, и потоки-обработчики
  * {@link ProcessorElements}, получающие на обработку элементы из хранилища.
+ * @author Maksim Mekh
+ * @version 1.0
  */
 public class ManagerProcessingElement {
     private BlockingQueue<Element> sourceQueueElements;  //исходная очередь элементов на обработку

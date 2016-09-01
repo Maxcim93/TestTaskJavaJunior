@@ -11,6 +11,8 @@ import java.util.Queue;
  * Новые элементы добавляются в группу и сортируются в соответствии с id (ITEM_ID), при выводе проверяется
  * наличие слеудющего по порядку id элемента, если элемента с следующим по порядку id - нет,вывод блокируется.
  * Вывод элементов осуществляется начиная с нулевого id (ITEM_ID = 0).
+ * @author Maksim Mekh
+ * @version 1.0
  */
 public class Group {
     private int expectedId=0;   //id (ITEM_ID) следующего по порядку элемента в группе
@@ -22,7 +24,8 @@ public class Group {
     /**
      * Конструктор инициализирует идентификатор группы (ID_GROUP) и
      * количество элементов, выводимых на обработку подряд из группы .
-     * @param idGroup идентификатор группы.
+     * @param idGroup идентификатор группы,
+     * @param sizeOutputBlock количесвто элементов, выводимых подряд из группы на обработку.
      */
     public Group(int idGroup,int sizeOutputBlock){
         this.idGroup=idGroup;

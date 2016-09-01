@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Имитация обработки очереди.
+ * @author Maksim Mekh
+ * @version 1.0
  */
 public class App
 {

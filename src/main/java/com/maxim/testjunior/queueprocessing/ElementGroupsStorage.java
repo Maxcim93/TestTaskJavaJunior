@@ -15,6 +15,8 @@ import java.util.LinkedList;
  * принципу резервирования - зарезрвированная группа доступна только получившему потоку.
  * Поток получает группу, выполняет операции обработки и возвращает группу в хранилище,
  * после чего она доступна для резервирвания другими потоками.
+ * @author Maksim Mekh
+ * @version 1.0
  */
 public class ElementGroupsStorage {
     private Map<Integer,Group> groups=new HashMap<Integer,Group>();     //группы элементов

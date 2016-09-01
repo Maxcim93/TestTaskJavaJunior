@@ -3,6 +3,8 @@ package com.maxim.testjunior.elements;
 /**
  * Класс описывает элемент, характеризующийся
  * id элемента (ITEM_ID) и id группы (GROUP_ID), к которой он относится.
+ * @author Maksim Mekh
+ * @version 1.0
  */
 public class Element implements Comparable<Element>{
     /**Id элемента (ITEM_ID).*/

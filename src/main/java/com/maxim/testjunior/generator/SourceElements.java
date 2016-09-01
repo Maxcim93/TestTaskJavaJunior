@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
  * Функционал направлен на заполнение исходной очереди случайными элементами
  * {@link com.maxim.testjunior.elements.Element} с помощью генератора
  * {@link com.maxim.testjunior.generator.GeneratorElements}.
+ * @author Maksim Mekh
+ * @version 1.0
  */
 public class SourceElements extends Thread{
 

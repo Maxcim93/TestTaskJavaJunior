@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
  * Обрабока заклчается в выведении идентификатора элемента (ITEM_ID)
  * и идентификатора группы (GROUP_ID). Элементы на обработку задача получает из
  * хранилища групп элементов {@link ElementGroupsStorage}.
+ * @author Maksim Mekh
+ * @version 1.0
  */
 public class ProcessorElements implements Runnable {
     private ElementGroupsStorage storage;   //хранилище групп элементов
